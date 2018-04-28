@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en" xmlns:th="http://www/thymeleaf.org">
+    <head>
+        <title>Recipe Home</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <h1>My Recepies!</h1>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Description</th>
+            </tr>
+            <tr th:each="recipe : ${recipies}">
+                <td th:text="${recipe.id}">123</td>
+                <td th:text="${recipe.description}">description</td>
+             
+            </tr>
+
+        </table>
+
+    </body>
+</html>

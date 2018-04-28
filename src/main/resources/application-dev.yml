@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:mysql://172.17.0.3:3306/sfg_dev
+    username: sfg_dev_user
+    password: guru
+    platform: mysql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    show-sql: true
+##### Properties below create the sql statements for creating the database in the root directory of the project.
+##### Cut and Paste into a Mysql client and run in order to create the files
+#    properties:
+#      javax:
+#        persistence:
+#         schema-generation:
+#           create-source: metadata
+#          scripts:
+#           action: create
+#              create-target: guru_database_create.sql
+######
+######
