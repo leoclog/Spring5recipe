@@ -38,7 +38,7 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 		return ingredient;
 		
 			
-		
+ 		
 	}
 
 }

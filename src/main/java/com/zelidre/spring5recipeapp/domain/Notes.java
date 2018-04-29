@@ -5,12 +5,8 @@
  */
 package com.zelidre.spring5recipeapp.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -19,20 +15,15 @@ import javax.persistence.OneToOne;
 
 
 
-@Entity
+@Getter
+@Setter
 public class Notes {
+    private String id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne
     private Recipe recipe;
-    
-    @Lob
     private String recipeNotes;
 
-	public Notes(Long id, Recipe recipe, String recipeNotes) {
+	public Notes(String id, Recipe recipe, String recipeNotes) {
 		this.id = id;
 		this.recipe = recipe;
 		this.recipeNotes = recipeNotes;
@@ -40,30 +31,5 @@ public class Notes {
 
 	public Notes() {
 	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
-
-	public String getRecipeNotes() {
-		return recipeNotes;
-	}
-
-	public void setRecipeNotes(String recipeNotes) {
-		this.recipeNotes = recipeNotes;
-	}
-
    
 }

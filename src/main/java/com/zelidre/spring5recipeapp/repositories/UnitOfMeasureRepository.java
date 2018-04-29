@@ -13,7 +13,7 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author lpaalva
  */
-public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, Long> {
+public interface UnitOfMeasureRepository extends CrudRepository<UnitOfMeasure, String> {
     Optional<UnitOfMeasure> findByDescription(String description);
     
 }

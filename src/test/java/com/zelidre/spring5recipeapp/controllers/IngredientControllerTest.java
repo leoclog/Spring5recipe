@@ -4,37 +4,30 @@ package com.zelidre.spring5recipeapp.controllers;
 
 
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.any;
-
-import static org.mockito.Mockito.anyLong;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.zelidre.spring5recipeapp.commands.IngredientCommand;
 import com.zelidre.spring5recipeapp.commands.RecipeCommand;
 import com.zelidre.spring5recipeapp.commands.UnitOfMeasureCommand;
-import com.zelidre.spring5recipeapp.domain.Ingredient;
-import com.zelidre.spring5recipeapp.domain.Recipe;
 import com.zelidre.spring5recipeapp.repositories.RecipeRepository;
 import com.zelidre.spring5recipeapp.services.IngredientService;
 import com.zelidre.spring5recipeapp.services.RecipeService;

@@ -6,52 +6,27 @@
 package com.zelidre.spring5recipeapp.domain;
 
 import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author lpaalva
  */
 
-@Entity
+@Getter
+@Setter
+@Document
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+    private String id;
     private String description;
-
-       
-    //Below, categories is the name of the Set in Recipe.Java
-    @ManyToMany(mappedBy = "categories")
+    @DBRef
     private Set<Recipe> recipes;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Recipe> getRecipes() {
-        return recipes;
-    }
-
-    public void setRecipes(Set<Recipe> recipes) {
-        this.recipes = recipes;
-    }
-
-    
 }

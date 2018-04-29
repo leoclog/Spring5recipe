@@ -12,6 +12,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author lpaalva
  */
-public interface RecipeRepository extends CrudRepository<Recipe, Long>{
+public interface RecipeRepository extends CrudRepository<Recipe, String>{
     
 }

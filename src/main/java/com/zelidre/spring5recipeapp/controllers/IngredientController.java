@@ -39,7 +39,7 @@ public class IngredientController {
         log.debug("Getting ingredient list for recipe id: " + recipeId);
 
         // use command object to avoid lazy load errors in Thymeleaf.
-        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(recipeId)));
+        model.addAttribute("recipe", recipeService.findCommandById(recipeId));
 
         return "recipe/ingredient/list";
     }
@@ -49,7 +49,7 @@ public class IngredientController {
     public String showRecipeIngredient(@PathVariable String recipeid,	
       								   @PathVariable String id,
     								   Model model) {
-    	model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeid), Long.valueOf(id)));
+    	model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeid, id));
     	return "recipe/ingredient/show";
     }
     
@@ -58,7 +58,7 @@ public class IngredientController {
     public String updateRecipeIngredient(@PathVariable String recipeid,
     		                             @PathVariable String id,
     		                             Model model) {
-    	model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(Long.valueOf(recipeid), Long.valueOf(id)));
+    	model.addAttribute("ingredient", ingredientService.findByRecipeIdAndIngredientId(recipeid, id));
     	model.addAttribute("uomList", uomService.listAllUoms());
     	
     	return "recipe/ingredient/ingredientform";
@@ -71,7 +71,7 @@ public class IngredientController {
     public String deleteById(@PathVariable String recipeid,
     		                 @PathVariable String id) {
     
-    	ingredientService.deleteById(Long.valueOf(recipeid), Long.valueOf(id));
+    	ingredientService.deleteById(recipeid, id);
    	
     	log.debug("Deleted Ingredient: " + id + " from recipe: " + recipeid );
     	return "redirect:/recipe/" + recipeid + "/ingredients";
