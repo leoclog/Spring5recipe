@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,9 @@ import com.zelidre.spring5recipeapp.domain.UnitOfMeasure;
 import com.zelidre.spring5recipeapp.repositories.CategoryRepository;
 import com.zelidre.spring5recipeapp.repositories.RecipeRepository;
 import com.zelidre.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import com.zelidre.spring5recipeapp.repositories.reactive.CategoryReactiveRepository;
+import com.zelidre.spring5recipeapp.repositories.reactive.RecipeReactiveRepository;
+import com.zelidre.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +32,7 @@ public class BootStrapMongdb implements ApplicationListener<ContextRefreshedEven
 	private final CategoryRepository categoryRepository;
 	private final RecipeRepository recipeRepository;
 	private final UnitOfMeasureRepository uomRepository;
+	
 
 	public BootStrapMongdb(CategoryRepository categoryRepository, RecipeRepository recipeRepository,
 			UnitOfMeasureRepository uomRepository) {
@@ -43,7 +48,7 @@ public class BootStrapMongdb implements ApplicationListener<ContextRefreshedEven
 		loadUnitOfMeasures();
 		recipeRepository.saveAll(getRecipes());
 		log.debug("Loading the Mongo Database");
-
+		
 	}
 
 	private void loadUnitOfMeasures() {

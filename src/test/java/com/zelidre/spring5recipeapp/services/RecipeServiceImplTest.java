@@ -5,7 +5,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.never;
 
 import java.util.HashSet;
@@ -46,15 +46,15 @@ public class RecipeServiceImplTest {
 	@Test
 	public void getRecipeByIdTest() throws Exception{
 		Recipe recipe = new Recipe();
-		recipe.setId(1L);
+		recipe.setId("1");
 		Optional<Recipe> recipeOptional = Optional.of(recipe);
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 		
-		Recipe recipeReturned = recipeService.findById(1L);
+		Recipe recipeReturned = recipeService.findById("1");
 		
 		assertNotNull("Null recipe returned", recipeReturned);
-		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, times(1)).findById(anyString());
 		verify(recipeRepository, never()).findAll();
 		
 		
@@ -72,27 +72,26 @@ public class RecipeServiceImplTest {
 		
 		assertEquals(recipes.size(), 1);
 		verify(recipeRepository, times(1)).findAll();
-		verify(recipeRepository, never()).findById(anyLong());
+		verify(recipeRepository, never()).findById(anyString());
 	}
 	
 	@Test 
 	public void testDeletedById() throws Exception{
-		Long idToDelete = Long.valueOf(2L);
 		
-		recipeService.deleteById(idToDelete);
+		recipeService.deleteById("2");
 		
 		//no when, since method has void return type
 		
-		verify(recipeRepository, times(1)).deleteById(anyLong());
+		verify(recipeRepository, times(1)).deleteById(anyString());
 	}
 	
 	@Test(expected = NotFoundException.class)
 	public void getRecipeByidTestNotFound() throws Exception{
 		Optional<Recipe> recipeOptional = Optional.empty();
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 		
-		Recipe recipe = recipeService.findById(1L);
+		Recipe recipe = recipeService.findById("1");
 
 	}
 }

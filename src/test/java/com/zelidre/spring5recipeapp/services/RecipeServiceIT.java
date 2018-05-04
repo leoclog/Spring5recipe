@@ -33,7 +33,6 @@ public class RecipeServiceIT {
 	@Autowired
 	RecipeToRecipeCommand rcpTrcpC;
 	
-	@Transactional
 	@Test
 	public void testSaveOfDescription() throws Exception {
 		//given

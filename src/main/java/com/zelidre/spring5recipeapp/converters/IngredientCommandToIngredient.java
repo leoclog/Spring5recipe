@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.zelidre.spring5recipeapp.commands.IngredientCommand;
 import com.zelidre.spring5recipeapp.domain.Ingredient;
+import com.zelidre.spring5recipeapp.domain.Recipe;
 
 import lombok.Synchronized;
 
@@ -28,9 +29,16 @@ public class IngredientCommandToIngredient implements Converter<IngredientComman
 		if (source == null) {
 			return null;
 		}
-		
+
 		final Ingredient ingredient = new Ingredient();
 		ingredient.setId(source.getId());
+
+		if (source.getRecipeId() != null) {
+			Recipe recipe = new Recipe();
+			recipe.setId(source.getRecipeId());
+			recipe.addIngredient(ingredient);
+		}
+			
 		ingredient.setAmount(source.getAmount());
 		ingredient.setDescription(source.getDescription());
 		ingredient.setUom(uomCTuom.convert(source.getUom()));

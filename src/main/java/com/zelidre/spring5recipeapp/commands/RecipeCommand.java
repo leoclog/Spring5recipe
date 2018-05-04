@@ -1,6 +1,8 @@
 package com.zelidre.spring5recipeapp.commands;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.constraints.Max;
@@ -47,8 +49,8 @@ public class RecipeCommand {
 	    private Difficulty difficulty;
 	    private Byte[] image;
 	    private NotesCommand notes;
-	    private Set<IngredientCommand> ingredients = new HashSet<>();
-	    private Set<CategoryCommand> categories = new HashSet<>();
+	    private List<IngredientCommand> ingredients = new ArrayList<>();
+	    private List<CategoryCommand> categories = new ArrayList<>();
 
 
 }

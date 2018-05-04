@@ -1,6 +1,7 @@
 package com.zelidre.spring5recipeapp.converters;
 
 import org.springframework.core.convert.converter.Converter;
+
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
@@ -9,6 +10,9 @@ import com.zelidre.spring5recipeapp.domain.Notes;
 import com.zelidre.spring5recipeapp.domain.Recipe;
 
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe>{
 	
@@ -28,6 +32,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe>{
 	@Nullable
 	@Override
 	public Recipe convert(RecipeCommand source) {
+		log.debug("RecipeCommand to Recipe Conversion");
 		if (source == null) {
 			return null;
 		}
@@ -45,6 +50,7 @@ public class RecipeCommandToRecipe implements Converter<RecipeCommand, Recipe>{
 		recipe.setImage(source.getImage());
 		recipe.setNotes(notCTnot.convert(source.getNotes()));
 		
+		log.debug("RecipeCommand to Recipe Category Conversion");
 		if (source.getCategories() != null &&
 				source.getCategories().size()>0) {
 			source.getCategories()

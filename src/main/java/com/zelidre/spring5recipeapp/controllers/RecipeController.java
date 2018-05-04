@@ -31,66 +31,87 @@ public class RecipeController {
 		super();
 		this.recipeService = recipeService;
 	}
-	
-	@RequestMapping("/recipe/{id}/show") 
-	 public String ShowById(@PathVariable String id, Model model) {
+
+	@RequestMapping("/recipe/{id}/show")
+	public String ShowById(@PathVariable String id, Model model) {
 		model.addAttribute("recipe", recipeService.findById(id));
-		
+
 		return "recipe/show";
 	}
-	
+
 	@RequestMapping("recipe/new")
 	public String newRecipe(Model model) {
-		
+
 		model.addAttribute("recipe", new RecipeCommand());
-	
+
 		return RECIPE_RECIPEFORM_URL;
 	}
-	
-	
+
 	@RequestMapping("recipe/{id}/update")
 	public String updateRecipe(@PathVariable String id, Model model) {
+		log.debug("Enter Update");
 		model.addAttribute("recipe", recipeService.findCommandById(id));
+		log.debug("Exit Update");
 		return RECIPE_RECIPEFORM_URL;
 	}
-	
+
 	@PostMapping("recipe")
 	public String saveOrUpdate(@Valid @ModelAttribute("recipe") RecipeCommand command, BindingResult bindingResult) {
-
-		if(bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().forEach(objectError ->{
+		log.debug("SaveOrUpdate");
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(objectError -> {
 				log.debug(objectError.toString());
 			});
 			return RECIPE_RECIPEFORM_URL;
 		}
-		
+		// Categories and Ingredients are not input fields. They will not be passed in
+		// the
+		// command object. Therefore read the Original reciept and update the Categories
+		// and Ingredients
+		log.debug("Number of Categories : " + command.getCategories().size());
+		log.debug("Number of Ingredients : " + command.getIngredients().size());
+		log.debug("Reciept Id :" + command.getId());
+		RecipeCommand origCommand = recipeService.findCommandById(command.getId());
+		if (origCommand == null) {
+			log.debug("origCommand is null");
+		} else {
+
+			log.debug("Original Number of Categories : " + origCommand.getCategories().size());
+			command.setCategories(origCommand.getCategories());
+			log.debug("Original Number of Ingredients : " + origCommand.getIngredients().size());
+			command.setIngredients(origCommand.getIngredients());
+		}
+
+		// Set the Categories and Ingredients to original values;
+		log.debug("Before save Recipe Command");
+
 		RecipeCommand saveCommand = recipeService.saveRecipeCommand(command);
-		
+
+		log.debug("After save Recipe Command");
+
 		return "redirect:/recipe/" + saveCommand.getId() + "/show";
-		
-		
+
 	}
-	
 
 	@RequestMapping("recipe/{id}/delete")
 	public String deleteById(@PathVariable String id) {
-		log.debug("deleting id : " +id);
-		
+		log.debug("deleting id : " + id);
+
 		recipeService.deleteById(id);
-		
+
 		return "redirect:/";
 	}
-	
+
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NotFoundException.class)
-	public ModelAndView hanldeNotFound(Exception exception){
+	public ModelAndView hanldeNotFound(Exception exception) {
 		log.error("Handling Not Found Exception");
-		
+
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("404Error");
 		modelAndView.addObject("exception", exception);
-		
+
 		return modelAndView;
 	}
-	
+
 }

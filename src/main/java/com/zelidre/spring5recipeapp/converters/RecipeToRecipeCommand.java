@@ -8,7 +8,9 @@ import com.zelidre.spring5recipeapp.commands.RecipeCommand;
 import com.zelidre.spring5recipeapp.domain.Recipe;
 
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
 	private final IngredientToIngredientCommand ingTingC;
@@ -26,6 +28,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
 	@Nullable
 	@Override
 	public RecipeCommand convert(Recipe source) {
+		log.debug("Recipe to RecipeCommand Conversion");
 		if (source == null) {
 			return null;
 		}
@@ -54,7 +57,7 @@ public class RecipeToRecipeCommand implements Converter<Recipe, RecipeCommand>{
 			   .forEach(ingredient -> recipeCommand.getIngredients().add(ingTingC.convert(ingredient)));
 		}
 
-		
+		log.debug("end of RecipetoRecipeCommand Conversion");
 		return recipeCommand;
 	}
 

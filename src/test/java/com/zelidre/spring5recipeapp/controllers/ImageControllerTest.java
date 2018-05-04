@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -56,16 +56,16 @@ public class ImageControllerTest {
 		
 		RecipeCommand recipeCommand = new RecipeCommand();
 		
-		recipeCommand.setId(1L);
+		recipeCommand.setId("1");
 		
-		when(recipeService.findCommandById(anyLong())).thenReturn(recipeCommand);
+		when(recipeService.findCommandById(anyString())).thenReturn(recipeCommand);
 		
 		mockMvc.perform(get("/recipe/1/image"))
 						.andExpect(status().isOk())
 						.andExpect(view().name("recipe/imageuploadform"))
 						.andExpect(model().attributeExists("recipe"));
 		
-		verify(recipeService, times(1)).findCommandById(anyLong());
+		verify(recipeService, times(1)).findCommandById(anyString());
 	}
 
 	@Test
@@ -78,14 +78,14 @@ public class ImageControllerTest {
                                   .andExpect(status().is3xxRedirection())
                                   .andExpect(view().name("redirect:/recipe/1/show"));
 		
-		verify(imageService, times(1)).saveImageFile(anyLong(), any());
+		verify(imageService, times(1)).saveImageFile(anyString(), any());
 	}
 
 	@Test
 	public void renderImageFormDB() throws Exception {
 		RecipeCommand command = new RecipeCommand();
 		
-		command.setId(1L);
+		command.setId("1");
 		
 		String s = "Fake image test";
 		Byte[] bytes = new Byte[s.getBytes().length];
@@ -97,7 +97,7 @@ public class ImageControllerTest {
 		}
 		command.setImage(bytes);
 		
-		when(recipeService.findCommandById(anyLong())).thenReturn(command);
+		when(recipeService.findCommandById(anyString())).thenReturn(command);
 		
 		//when
 		MockHttpServletResponse response = mockMvc.perform(get("/recipe/1/recipeimage"))
@@ -110,11 +110,11 @@ public class ImageControllerTest {
 		
 	}
 	
-	@Test
-	public void imageNumberFormatException() throws Exception {
+//	@Test
+//	public void imageNumberFormatException() throws Exception {
 		
-		mockMvc.perform(get("/recipe/leo/recipeimage"))
-		                .andExpect(status().isBadRequest())
-		                .andExpect(view().name("400Error"));
-	}
+//		mockMvc.perform(get("/recipe/leo/recipeimage"))
+//		                .andExpect(status().isBadRequest())
+//		                .andExpect(view().name("400Error"));
+//	}
 }

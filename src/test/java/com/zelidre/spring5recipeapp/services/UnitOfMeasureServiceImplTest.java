@@ -19,50 +19,44 @@ import com.zelidre.spring5recipeapp.commands.UnitOfMeasureCommand;
 import com.zelidre.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.zelidre.spring5recipeapp.domain.UnitOfMeasure;
 import com.zelidre.spring5recipeapp.repositories.UnitOfMeasureRepository;
+import com.zelidre.spring5recipeapp.repositories.reactive.UnitOfMeasureReactiveRepository;
+
+import reactor.core.publisher.Flux;
 
 public class UnitOfMeasureServiceImplTest {
-	private final UnitOfMeasureToUnitOfMeasureCommand uomTuomC;
-	
-	UnitOfMeasureServiceImpl uomService;
+	UnitOfMeasureToUnitOfMeasureCommand uomTuomC = new UnitOfMeasureToUnitOfMeasureCommand();
+	UnitOfMeasureService uomService;
 	
 	@Mock
-	UnitOfMeasureRepository uomRepository;
+	UnitOfMeasureReactiveRepository uomReactiveRepository;
 	
 	
 	
-	public UnitOfMeasureServiceImplTest() {
-		this.uomTuomC = new UnitOfMeasureToUnitOfMeasureCommand();
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		
 		uomService = new UnitOfMeasureServiceImpl(uomTuomC,
-				uomRepository);
+				uomReactiveRepository);
 	}
 
 	@Test
 	public void listAllUomstest() {
 		//given
-		List<UnitOfMeasure> uomList = new ArrayList<>(3);
-		
+	
 		UnitOfMeasure uom1 = new UnitOfMeasure();
-		uom1.setId(1L);
+		uom1.setId("1");
 		UnitOfMeasure uom2 = new UnitOfMeasure();
-		uom2.setId(2L);
+		uom2.setId("2");
 		UnitOfMeasure uom3 = new UnitOfMeasure();
-		uom2.setId(3L);
-		uomList.add(uom1);
-		uomList.add(uom2);
-		uomList.add(uom3);
+		uom2.setId("3");
 
 		
-		when(uomRepository.findAll()).thenReturn(uomList);
+		when(uomReactiveRepository.findAll()).thenReturn(Flux.just(uom1, uom2, uom3));
 		
-		Set<UnitOfMeasureCommand> uomCs = uomService.listAllUoms();
+		List <UnitOfMeasureCommand> uomCs = uomService.listAllUoms().collectList().block();
 		assertEquals(3, uomCs.size());
-		verify(uomRepository, times(1)).findAll();
+		verify(uomReactiveRepository, times(1)).findAll();
 	}
 
 }

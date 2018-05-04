@@ -57,6 +57,7 @@
 										<label>Categories:</label>
 									</div>
 									<div class="col-md-9 form-group">
+<!-- 									
 										<div class="radio">
 											<label> <input type="checkbox" value="" /> Cat 1
 											</label>
@@ -65,7 +66,15 @@
 											<label> <input type="checkbox" value="" /> Cat 2
 											</label>
 										</div>
-									</div>
+-->
+										<ul th:if="${not #lists.isEmpty(recipe.categories)}">
+											<li th:remove="all">Categorie 1</li>
+											<li th:remove="all">Categorie 2</li>
+											<li th:each="category : ${recipe.categories}"
+												th:text="${category.getDescription()}">
+												Category</li>
+										</ul>
+									</div>									
 								</div>
 								<div class="row">
 									<div class="col-md-3 form-group"
@@ -152,7 +161,7 @@
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-12">
-										<ul>
+										<ul th:if="${not #lists.isEmpty(recipe.ingredients)}">
 											<li th:remove="all">1 Cup of milk</li>
 											<li th:remove="all">1 Teaspoon of chocolate</li>
 											<li th:each="ingredient : ${recipe.ingredients}"
